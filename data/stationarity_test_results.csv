@@ -1,0 +1,55 @@
+"series.name","test.name","statistic","lag.parameter","p.value"
+"Berlin_a","Augmented Dickey-Fuller Test",-9.4933913365721,20,0.01
+"Berlin_a","KPSS Test for Level Stationarity",2.92589454333481,12,0.01
+"Berlin_a","Phillips-Perron Unit Root Test",-13801.6531874139,12,0.01
+"Berlin_b","Augmented Dickey-Fuller Test",-10.7927454151918,18,0.01
+"Berlin_b","KPSS Test for Level Stationarity",4.99086029408223,11,0.01
+"Berlin_b","Phillips-Perron Unit Root Test",-7668.43322870827,11,0.01
+"Berlin_c","Augmented Dickey-Fuller Test",-7.84875458956142,18,0.01
+"Berlin_c","KPSS Test for Level Stationarity",6.22435484694063,11,0.01
+"Berlin_c","Phillips-Perron Unit Root Test",-8382.18742233034,11,0.01
+"Frankfurt_a","Augmented Dickey-Fuller Test",-12.5764692004157,17,0.01
+"Frankfurt_a","KPSS Test for Level Stationarity",0.366995797854365,10,0.091381121614498
+"Frankfurt_a","Phillips-Perron Unit Root Test",-6705.09822584587,10,0.01
+"Frankfurt_b","Augmented Dickey-Fuller Test",-11.4382972732644,17,0.01
+"Frankfurt_b","KPSS Test for Level Stationarity",4.91298364435819,11,0.01
+"Frankfurt_b","Phillips-Perron Unit Root Test",-7893.79536005933,11,0.01
+"Frankfurt_c","Augmented Dickey-Fuller Test",-9.62325136734134,14,0.01
+"Frankfurt_c","KPSS Test for Level Stationarity",0.617440458256375,9,0.0210508674312387
+"Frankfurt_c","Phillips-Perron Unit Root Test",-3929.88447031462,9,0.01
+"Leipzig_a","Augmented Dickey-Fuller Test",-9.6259771740675,16,0.01
+"Leipzig_a","KPSS Test for Level Stationarity",5.26808908902092,10,0.01
+"Leipzig_a","Phillips-Perron Unit Root Test",-6261.56780237145,10,0.01
+"Leipzig_b","Augmented Dickey-Fuller Test",-13.0324624579794,20,0.01
+"Leipzig_b","KPSS Test for Level Stationarity",1.67215219420994,11,0.01
+"Leipzig_b","Phillips-Perron Unit Root Test",-10693.9500246294,11,0.01
+"Leipzig_c","Augmented Dickey-Fuller Test",-16.4787559960282,21,0.01
+"Leipzig_c","KPSS Test for Level Stationarity",1.57846264658286,12,0.01
+"Leipzig_c","Phillips-Perron Unit Root Test",-12284.9988204,12,0.01
+"Potsdam_a","Augmented Dickey-Fuller Test",-6.41488595941517,10,0.01
+"Potsdam_a","KPSS Test for Level Stationarity",1.04813640501309,7,0.01
+"Potsdam_a","Phillips-Perron Unit Root Test",-1155.46871756775,7,0.01
+"Potsdam_b","Augmented Dickey-Fuller Test",-14.811878162836,18,0.01
+"Potsdam_b","KPSS Test for Level Stationarity",2.12879032973964,11,0.01
+"Potsdam_b","Phillips-Perron Unit Root Test",-7890.05003457122,11,0.01
+"Potsdam_c","Augmented Dickey-Fuller Test",-19.4161926378273,23,0.01
+"Potsdam_c","KPSS Test for Level Stationarity",16.1826141085253,13,0.01
+"Potsdam_c","Phillips-Perron Unit Root Test",-14750.6497521546,13,0.01
+"Potsdam..high.density._a","Augmented Dickey-Fuller Test",-10.4670946289408,14,0.01
+"Potsdam..high.density._a","KPSS Test for Level Stationarity",0.956153042991461,9,0.01
+"Potsdam..high.density._a","Phillips-Perron Unit Root Test",-3127.71162632676,9,0.01
+"Potsdam..high.density._b","Augmented Dickey-Fuller Test",-7.98169595973568,11,0.01
+"Potsdam..high.density._b","KPSS Test for Level Stationarity",1.55750500257906,8,0.01
+"Potsdam..high.density._b","Phillips-Perron Unit Root Test",-1697.40130504494,8,0.01
+"Potsdam..high.density._c","Augmented Dickey-Fuller Test",-6.3971303402486,9,0.01
+"Potsdam..high.density._c","KPSS Test for Level Stationarity",2.83399345164485,7,0.01
+"Potsdam..high.density._c","Phillips-Perron Unit Root Test",-981.950012732471,7,0.01
+"Potsdam..subset._a","Augmented Dickey-Fuller Test",-23.1124683340967,29,0.01
+"Potsdam..subset._a","KPSS Test for Level Stationarity",7.28384137209517,15,0.01
+"Potsdam..subset._a","Phillips-Perron Unit Root Test",-35099.5875858322,15,0.01
+"Potsdam..subset._b","Augmented Dickey-Fuller Test",-25.4339071490776,29,0.01
+"Potsdam..subset._b","KPSS Test for Level Stationarity",1.35748524804527,15,0.01
+"Potsdam..subset._b","Phillips-Perron Unit Root Test",-31727.6115873655,15,0.01
+"Potsdam..subset._c","Augmented Dickey-Fuller Test",-19.9640762850078,29,0.01
+"Potsdam..subset._c","KPSS Test for Level Stationarity",11.2263010937104,15,0.01
+"Potsdam..subset._c","Phillips-Perron Unit Root Test",-35511.071861717,15,0.01
