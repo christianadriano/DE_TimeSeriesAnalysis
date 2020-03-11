@@ -51,15 +51,15 @@ test_stationary <- function(y,index,series.name){
 series.names.list = colnames(dt.set)
 
 #create the data.frame for all test statitics
-col.length = length(series.names.list) * 3; #3 times because three tests per series.name
+#3 times because three tests per series.name
+col.length = length(series.names.list) * 3;
 
 df_tests <- data.frame(
-  test.num = numeric(col.length),
+  series.name=character(col.length),
   test.name=character(col.length),
   statistic=numeric(col.length),
   lag.parameter=integer(col.length),
   p.value=numeric(col.length),
-  series.name=character(col.length),
   stringsAsFactors =FALSE
 )
 
@@ -72,3 +72,9 @@ for(i in c(1:length(series.names.list))){
 }
 
 
+#WRITE TO FILE
+csv_file <- str_c(root,"stationarity_test_results",".csv")
+write.table(df_tests, file = csv_file, sep = ",", 
+            col.names = !file.exists(csv_file), 
+            row.names = FALSE,
+            append = F)
