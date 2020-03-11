@@ -11,9 +11,9 @@ library(ggplot2)
 
 #------------------------------
 #LOAD DATA
-root <-  "C://Users//Christian//Documents//GitHub//DE_TimeSeriesAnalysis//data//"
+root <-  "C://Users//Christian//Documents//GitHub//DE_TimeSeriesAnalysis//"
 file_name = "avg_runtimes"
-dt.set <- read.csv(str_c(root,file_name,".csv"))
+dt.set <- read.csv(str_c(root,"//data//",file_name,".csv"))
 
 #--------------------------------
 
@@ -36,7 +36,7 @@ find_threshold <- function(df_results, data, index, model.name, series.name){
   
   #plot without first data point because it is always 1 and
   #it distorts the plot visualization
-  #plot(data[2:length(data$acf)], main=str_c(model.name,".",series.name))
+  plot(data[2:length(data$acf)], main=str_c(model.name,".",series.name))
   
   #Discover the lag after which all values are significant
   #remove all significant points.
@@ -50,8 +50,6 @@ find_threshold <- function(df_results, data, index, model.name, series.name){
   return (df_results)
 }
 
-#plot(acf_data[acf_data<0.025 & acf_data>-0.025])
-
 #------------------------------
 #MAIN
 
@@ -59,7 +57,7 @@ series.names.list = colnames(dt.set)
 
 #create the data.frame for all test statitics
 #2 times because two ACF models per series.name
-col.length = length(series.names.list) * 2;
+col.length = length(series.names.list) * 1; #only PACF
 
 df_results <- data.frame(
   series.name=character(col.length),
@@ -78,27 +76,15 @@ for(i in c(1:length(series.names.list))){
   series.name <- series.names.list[i]
   
   #ACF
-  model.name = "ACF"
-  data <- acf(series,lag.max = length(series),
-               xlab = "lag #",
-               ylab = model.name,
-               main=series.name, plot = FALSE)
-  
-  df.data <- data.frame(lag=c(1:length(data$acf)), acf=data$acf)
-  df.data <- df.data[-c(1),]
-  # plot_array[[index]]  <-ggplot(df.data, aes(x=lag, y=acf)) +
-  #   geom_line()+
-  #   geom_hline(aes(yintercept=0.025,colour="red"))+
-  #   geom_hline(aes(yintercept=-0.025,colour="red"))+
-  #   ggtitle(str_c(model.name,".",series.name))+
-  #   xlab("lag#")+ylab(model.name)
-    
-    
-  
-  
-  df_results <- find_threshold(df_results, data,index, 
-                               model.name, series.name)
-  index = index+1
+  # model.name = "ACF"
+  # data <- acf(series,lag.max = length(series),
+  #              xlab = "lag #",
+  #              ylab = model.name,
+  #              main=series.name, plot = FALSE)
+  # 
+  # df_results <- find_threshold(df_results, data,index, 
+  #                              model.name, series.name)
+  # index = index+1
  
   #PACF
   model.name = "PACF"
@@ -107,15 +93,6 @@ for(i in c(1:length(series.names.list))){
                ylab = str_c(model.name),
                main=series.name, plot = FALSE)
   
-  df.data <- data.frame(lag=c(1:length(data$acf)), acf=data$acf)
-  df.data <- df.data[-c(1),]
-  # plot_array[[5]]  <-ggplot(df.data, aes(x=lag, y=acf)) +
-  #                          geom_line()+
-  #                          geom_hline(yintercept=0.025,colour="blue",linetype="dashed")+
-  #                          geom_hline(yintercept=-0.025,colour="blue", linetype="dashed")+
-  #                          ggtitle(str_c(model.name,".",series.name))+
-  #                          xlab("lag#")+ylab(model.name)
-
   df_results <- find_threshold(df_results, data,index, 
                                model.name, series.name)
   
@@ -124,9 +101,9 @@ for(i in c(1:length(series.names.list))){
 
 
 #WRITE TO FILE
-csv_file <- str_c(root,"threshold_results",".csv")
+csv_file <- str_c(root,"//output//threshold_results",".csv")
 write.table(df_results, file = csv_file, sep = ",", 
-            col.names = !file.exists(csv_file), 
+            col.names = colnames(df_results),
             row.names = FALSE,
             append = F)
 
