@@ -3,7 +3,22 @@
 " 
 Test for Stationarity
 
+Sources from https://rpubs.com/richkt/269797
+
 "
+library(stringr)
+
+
+root <-  "C://Users//Christian//Documents//GitHub//DE_TimeSeriesAnalysis//data//"
+file_name = "avg_runtimes"
+dataset_articles <- read.csv(str_c(root,file_name,".csv"))
+
+head(dataset_articles)
+
+df <- data.frame(dataset_articles)
+dim(df) #25000    18
+
+summary(df)
 
 #Randonm noise for Benchmarking
 t = 0:1000
