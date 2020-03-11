@@ -6,8 +6,8 @@ of significance threshold.
 
 library(stringr)
 library(tseries)
-install.packages("Rmisc")
 library(Rmisc)
+library(ggplot2)
 
 #------------------------------
 #LOAD DATA
@@ -25,7 +25,6 @@ add_dataframe <- function(df_results, row, threshold, series.size,
   df_results[row,"threshold.point"] = threshold;
   df_results[row,"series.size"] = series.size;
   
-  
   return(df_results)
 }
 
@@ -37,7 +36,7 @@ find_threshold <- function(df_results, data, index, model.name, series.name){
   
   #plot without first data point because it is always 1 and
   #it distorts the plot visualization
-  plot(data[2:length(data$acf)], main=str_c(model.name,".",series.name))
+  #plot(data[2:length(data$acf)], main=str_c(model.name,".",series.name))
   
   #Discover the lag after which all values are significant
   #remove all significant points.
@@ -70,10 +69,8 @@ df_results <- data.frame(
   stringsAsFactors =FALSE
 )
 
-plot_array <-  vector('list',length=2)
 
 index <-  1
-#i <- 1
 
 for(i in c(1:length(series.names.list))){
   series <- dt.set[,i]
@@ -84,15 +81,20 @@ for(i in c(1:length(series.names.list))){
   model.name = "ACF"
   data <- acf(series,lag.max = length(series),
                xlab = "lag #",
-               ylab = str_c(model.name),
+               ylab = model.name,
                main=series.name, plot = FALSE)
   
-
-  # plot_array[[index]] <- local({   
-  #                           p <- plot(data[2:length(data$acf)], 
-  #                                            main=str_c(model.name,".",series.name))
-  #                           print(p)
-  #                       })
+  df.data <- data.frame(lag=c(1:length(data$acf)), acf=data$acf)
+  df.data <- df.data[-c(1),]
+  # plot_array[[index]]  <-ggplot(df.data, aes(x=lag, y=acf)) +
+  #   geom_line()+
+  #   geom_hline(aes(yintercept=0.025,colour="red"))+
+  #   geom_hline(aes(yintercept=-0.025,colour="red"))+
+  #   ggtitle(str_c(model.name,".",series.name))+
+  #   xlab("lag#")+ylab(model.name)
+    
+    
+  
   
   df_results <- find_threshold(df_results, data,index, 
                                model.name, series.name)
@@ -105,22 +107,56 @@ for(i in c(1:length(series.names.list))){
                ylab = str_c(model.name),
                main=series.name, plot = FALSE)
   
-  # plot_array[[index]]  <- plot(data[2:length(data$acf)], 
-  #                                   main=str_c(model.name,".",series.name))
-  #                             print(p)
-  # })
-  
+  df.data <- data.frame(lag=c(1:length(data$acf)), acf=data$acf)
+  df.data <- df.data[-c(1),]
+  # plot_array[[5]]  <-ggplot(df.data, aes(x=lag, y=acf)) +
+  #                          geom_line()+
+  #                          geom_hline(yintercept=0.025,colour="blue",linetype="dashed")+
+  #                          geom_hline(yintercept=-0.025,colour="blue", linetype="dashed")+
+  #                          ggtitle(str_c(model.name,".",series.name))+
+  #                          xlab("lag#")+ylab(model.name)
+
   df_results <- find_threshold(df_results, data,index, 
                                model.name, series.name)
   
   index = index + 1
 }
 
-#multiplot(plot_array[1],plot_array[2],2)
 
 #WRITE TO FILE
 csv_file <- str_c(root,"threshold_results",".csv")
-write.table(df_tests, file = csv_file, sep = ",", 
+write.table(df_results, file = csv_file, sep = ",", 
             col.names = !file.exists(csv_file), 
             row.names = FALSE,
             append = F)
+
+
+#----------------------------------------------
+#Plot only the PACF results
+
+plot_array <-  vector('list')
+
+#PACF
+for(i in c(1:length(series.names.list))){
+  series <- dt.set[,i]
+  series <- series[!is.na(series)]
+  series.name <- series.names.list[i]
+  
+  model.name = "PACF"
+  data <- pacf(series, lag.max = length(series),
+               xlab = "lag #",
+               ylab = str_c(model.name),
+               main=series.name, plot = FALSE)
+  
+  df.data <- data.frame(lag=c(1:length(data$acf)), acf=data$acf)
+  df.data <- df.data[-c(1),]
+  plot_array[[i]]  <-ggplot(df.data, aes(x=lag, y=acf)) +
+    geom_line()+
+    geom_hline(yintercept=0.025,colour="blue",linetype="dashed")+
+    geom_hline(yintercept=-0.025,colour="blue", linetype="dashed")+
+    ggtitle(str_c(model.name,".",series.name))+
+    xlab("lag#")+ylab(model.name)
+  
+}
+
+multiplot(plotlist=plot_array,cols=3)
