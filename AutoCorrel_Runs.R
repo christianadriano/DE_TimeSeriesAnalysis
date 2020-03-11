@@ -4,22 +4,17 @@ Test simulations for stationarity
 "
 
 library(stringr)
-library(ggplot2)
+library(tseries)
 
 
 root <-  "C://Users//Christian//Documents//GitHub//DE_TimeSeriesAnalysis//data//"
 file_name = "avg_runtimes"
 dt.set <- read.csv(str_c(root,file_name,".csv"))
 
-head(dt.set)
 
-
- 
-
-library(tseries)
-
-add_dataframe <- function(df_tests, row, test){
+add_dataframe <- function(df_tests, row, test, series.name){
   
+  df_tests[row,"series.name"] = series.name
   df_tests[row,"test.name"] = test$method;
   df_tests[row,"statistic"] = test$statistic
   df_tests[row,"lag.parameter"] = test$parameter
@@ -29,67 +24,51 @@ add_dataframe <- function(df_tests, row, test){
 }
 
 
-test_stationary <- function(y,series.name){
-  
-  df_tests <- data.frame(
-    test.num = numeric(3),
-    test.name=character(3),
-    statistic=numeric(3),
-    lag.parameter=integer(3),
-    p.value=numeric(3),
-    series.name=character(3),
-    stringsAsFactors =FALSE
-  )
-  
-  df_tests$series.name = series.name
-  
+test_stationary <- function(y,index,series.name){
+
   #--------
   #Augmented Dickey-Fuller Test
   test <- adf.test(y)
-  df_tests <- add_dataframe(df_tests,1,test)
+  df_tests <- add_dataframe(df_tests,index,test, series.name)
   
   #----
   #KPSS Test for Stationarity
   test <-kpss.test(y, null="Level")
-  df_tests <- add_dataframe(df_tests,2,test)
+  df_tests <- add_dataframe(df_tests,index+1,test,series.name)
   
   #----
   #Phillips-Perron Unit Root Test
-  pp_test <- pp.test(y)
-  df_tests <- add_dataframe(df_tests,3,test)
+  test <- pp.test(y)
+  df_tests <- add_dataframe(df_tests,index+2,test,series.name)
   
   return (df_tests)
 }
 
-series.names.list = c(data.)
 
-#Plot timeseries
+#----------------------------------------------------
+#MAIN
 
-#wrangle the dataset
-y= dt.set$Berlin_a[!is.na(dt.set$Berlin_a)]
-x=c(1:length(y))
-df = data.frame(x,y)
+series.names.list = colnames(dt.set)
 
-#ggplot(data=df,aes(x,y)) +geom_point()
+#create the data.frame for all test statitics
+col.length = length(series.names.list) * 3; #3 times because three tests per series.name
 
-#-----------
-"ACF model"
-lag.length = length(y)
-acf_data <- acf(y,lag.max = lag.length,
-                xlab = "lag #", ylab = 'ACF',main='Berlin_a', 
-                plot = FALSE)
+df_tests <- data.frame(
+  test.num = numeric(col.length),
+  test.name=character(col.length),
+  statistic=numeric(col.length),
+  lag.parameter=integer(col.length),
+  p.value=numeric(col.length),
+  series.name=character(col.length),
+  stringsAsFactors =FALSE
+)
 
-#PLot without the first correlation value (which is One by default)
-plot(acf_data[2:length(acf_data$acf)])
+index = 1
+for(i in c(1:length(series.names.list))){
+  y <- dt.set[,i]
+  y <- y[!is.na(y)]
+  df_tests <- test_stationary(y,index,series.names.list[i])
+  index = index + 3
+}
 
-
-#----------
-"Partial Auto-correlation model"
-pacf_data <- pacf(y,lag.max = length(y),
-                  xlab = "lag #", ylab = 'ACF',main='Berlin_a',
-                  plot = FALSE)
-
-plot(pacf_data[2:length(pacf_data$acf)])
-
-plot(acf_data[acf_data<0.025 & acf_data>-0.025])
 
