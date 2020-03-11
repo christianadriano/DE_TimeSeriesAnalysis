@@ -7,8 +7,8 @@ library(stringr)
 library(tseries)
 
 
-root <-  "C://Users//Christian//Documents//GitHub//DE_TimeSeriesAnalysis//data//"
-file_name = "avg_runtimes"
+root <-  "C://Users//Christian//Documents//GitHub//DE_TimeSeriesAnalysis"
+file_name = "//data//avg_runtimes"
 dt.set <- read.csv(str_c(root,file_name,".csv"))
 
 
@@ -73,8 +73,8 @@ for(i in c(1:length(series.names.list))){
 
 
 #WRITE TO FILE
-csv_file <- str_c(root,"stationarity_test_results",".csv")
+csv_file <- str_c(root,"//output//stationarity_test_results",".csv")
 write.table(df_tests, file = csv_file, sep = ",", 
-            col.names = !file.exists(csv_file), 
+            col.names = colnames(df_tests),
             row.names = FALSE,
             append = F)
