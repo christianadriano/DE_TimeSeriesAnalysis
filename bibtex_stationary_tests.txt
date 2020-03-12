@@ -32,3 +32,11 @@
   year={1988},
   publisher={Elsevier}
 }
+
+@article{banerjee1993co,
+  title={Co-integration, error correction, and the econometric analysis of non-stationary data},
+  author={Banerjee, Anindya and Dolado, Juan J and Galbraith, John W and Hendry, David and others},
+  journal={OUP Catalogue},
+  year={1993},
+  publisher={Oxford university press}
+}
